@@ -1,26 +1,34 @@
 import random
 
+# Define the levels, max trials, and hints using lists
+levels = [1, 2, 3]
+max_trials = [5, 7, 3]
+hints = [True, False, False]
+
 def guess_the_number(level):
-    # Initialize the score
-    score = 20
-    trials = {1: (5, True), 2: (7, False), 3: (3, False)}
-    
-    if level not in trials:
+    score = 0
+
+    if level not in levels:
         print("Invalid level. Please choose 1, 2, or 3.")
         return
 
-    max_trials, hints = trials[level]
+    # Get index for the selected level
+    index = levels.index(level)
+
+    # Get max trials and hint status
+    max_trial = max_trials[index]
+    hint = hints[index]
     n = random.randint(1, 100)
 
-    print(f"Level {level}: Guess the number ({max_trials} trials, {'with hints' if hints else 'no hints'})")
+    print(f"Level {level}: Guess the number ({max_trial} trials, {'with hints' if hint else 'no hints'})")
 
-    for i in range(max_trials):
+    for i in range(max_trial):
         num = int(input("Guess a number: "))
         if num == n:
             print("Wonderful, you got the number!")
-            score += 50 * (level)  # Increase points based on level
+            score += 50 * level  # Increase points based on level
             break
-        elif hints:
+        elif hint:
             if num < n:
                 print("Your guess is lower than the number. Try again.")
             else:
@@ -33,7 +41,6 @@ def guess_the_number(level):
         print(f"You lost. The number was {n}.")
 
     print(f"Your score for Level {level}: {score}")
-
 # Example usage:
 guess_the_number(1)  # Call for Level 1
 #guess_the_number(2)  # Call for Level 2
